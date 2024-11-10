@@ -13,6 +13,9 @@
 
 <!-- Form cho phap nhap gia tri va gui vao request ten : createUser -->
 <hr>
+<% if(message) { %>
+    <h1><%= message %></h1>
+<% } %>
 <form action="/createUser" method="POST"
       enctype="application/x-www-form-urlencoded">
     <div style="display:flex;flex-direction: column;flex: auto;gap: 10px">

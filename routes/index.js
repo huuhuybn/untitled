@@ -43,8 +43,15 @@ router.get('/createUser', function (req, res) {
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
-    res.render('index', {title: 'Express'});
+    res.render('index', {title: 'Express', message: "Hello World"});
 });
+
+router.get('/deleteUser', function (req, res) {
+    const id = req.query.id
+    STUDENT.deleteOne({_id: id}).then(result => {
+        res.redirect('/displayUsers')
+    })
+})
 
 router.get('/getAllUser', function (req, res
 ) {
@@ -83,25 +90,49 @@ router.get('/getAUser', function (req, res
 })
 
 router.get('/displayUsers', function (req, res) {
-    var jsonData = [{
-        id: 1,
-        name: "Nguyen Van A",
-        age: 20
-    },
-        {
-            id: 2,
-            name: "Nguyen Van B",
-            age: 20
-        }, {
-            id: 3,
-            name: "Nguyen Van C",
-            age: 20
-        }
-    ]
-    // trả về 1 file html có tên là users trong thư mục views và truyền vào biến data
-    res.render("users", {
-        name: "Huy Nguyen",
-        data: jsonData
+    // var jsonData = [{
+    //     id: 1,
+    //     name: "Nguyen Van A",
+    //     age: 20
+    // },
+    //     {
+    //         id: 2,
+    //         name: "Nguyen Van B",
+    //         age: 20
+    //     }, {
+    //         id: 3,
+    //         name: "Nguyen Van C",
+    //         age: 20
+    //     }
+    // ]
+    STUDENT.find({}).then(jsonData => {
+        // trả về 1 file html có tên là users trong thư mục views và truyền vào biến data
+        res.render("users", {
+            name: "Huy Nguyen",
+            data: jsonData
+        })
+    })
+})
+
+router.get("/updateUser", function (req, res) {
+    const id = req.query.id
+    STUDENT.findOne({_id: id}).then(result => {
+        console.log(JSON.stringify(result))
+        res.render('updateForm', {data: result})
+    })
+})
+
+router.post('/updateUser', function (req, res) {
+    const id = req.body.id
+    const name = req.body.name
+    const address = req.body.address
+    const phone = req.body.phone
+    console.log(id)
+    STUDENT.updateOne({_id: id},
+        {name: name, address: address, phone: phone}).then(result => {
+        res.redirect('/displayUsers')
+    }).catch(err => {
+        console.log(err)
     })
 })
 
@@ -114,12 +145,15 @@ router.post('/createUser', function (req,
     // <input name="age">
     const name = req.body.name;
     const age = req.body.age;
-    const user = `{
-        name: "${name}",
-        age: ${age}
-    }`
-    res.send(user)
-
-
+    const random = Math.floor(Math.random() * 1000)
+    const student = new STUDENT({
+        name: name,
+        address: random + "Ha Noi ",
+        phone: age
+    })
+    student.save().then(result => {
+        // res.render('index', {title: "Created User", message: "Create user successfully"})
+        res.redirect('/displayUsers')
+    })
 })
 module.exports = router;

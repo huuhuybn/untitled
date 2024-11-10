@@ -17,7 +17,10 @@
 
     <div><%= data[i].id %></div>
     <div><%= data[i].name %></div>
-    <div><%= data[i].age %></div>
+    <div><%= data[i].address %></div>
+    <div><%= data[i].phone %></div>
+    <a href="/deleteUser?id=<%= data[i].id %>">Delete</a>
+    <a href="/updateUser?id=<%= data[i].id %>">Update</a>
     <hr>
 
 <% } %>
