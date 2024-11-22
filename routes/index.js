@@ -153,7 +153,19 @@ router.post('/createUser', function (req,
     })
     student.save().then(result => {
         // res.render('index', {title: "Created User", message: "Create user successfully"})
-        res.redirect('/displayUsers')
+        //res.redirect('/displayUsers')
+        const ketqua = {
+            errorCode: 200,
+            message: "Create user successfully",
+        }
+        res.send(ketqua)
+    }).catch(err => {
+        console.log(err)
+        const ketqua = {
+            errorCode: 500,
+            message: "Create user fail",
+        }
+        res.send(ketqua)
     })
 })
 module.exports = router;
