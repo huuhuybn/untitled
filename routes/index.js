@@ -49,7 +49,11 @@ router.get('/', function (req, res, next) {
 router.get('/deleteUser', function (req, res) {
     const id = req.query.id
     STUDENT.deleteOne({_id: id}).then(result => {
-        res.redirect('/displayUsers')
+        const ketqua = {
+            errorCode: 200,
+            message: "Delete user successfully"
+        }
+        res.send(ketqua)
     })
 })
 
