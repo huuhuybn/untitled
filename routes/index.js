@@ -165,6 +165,7 @@ router.post('/createUser', function (req,
             errorCode: 500,
             message: "Create user fail",
         }
+
         res.send(ketqua)
     })
 })
