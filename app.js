@@ -9,16 +9,6 @@ var usersRouter = require('./routes/users');
 
 var app = express();
 
-// Cấu hình i18n
-i18n.configure({
-  locales: ['en', 'vi'], // Danh sách ngôn ngữ (ví dụ: English và Vietnamese)
-  directory: path.join(__dirname, 'locales'), // Thư mục chứa file ngôn ngữ
-  defaultLocale: 'en', // Ngôn ngữ mặc định
-  cookie: 'lang', // Tên cookie để lưu lựa chọn ngôn ngữ
-});
-
-app.use(i18n.init); // Khởi tạo i18n
-
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
